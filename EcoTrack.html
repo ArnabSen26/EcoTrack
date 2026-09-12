@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>EcoTrack - Make Every Choice Count</title>
+
+    <style>
+        /* =========================
+           GENERAL
+        ========================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4faf6;
+            color: #173b2b;
+            line-height: 1.6;
+        }
+
+        /* =========================
+           NAVIGATION
+        ========================== */
+
+        header {
+            background: #075e54;
+            color: white;
+            padding: 18px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.15);
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .logo span {
+            color: #8df0a8;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 25px;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            color: #8df0a8;
+        }
+
+        /* =========================
+           HERO
+        ========================== */
+
+        .hero {
+            min-height: 650px;
+            padding: 80px 8%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+            background:
+                linear-gradient(
+                    rgba(5, 83, 70, 0.92),
+                    rgba(20, 132, 82, 0.90)
+                );
+
+            color: white;
+        }
+
+        .earth {
+            font-size: 45px;
+            margin-bottom: 10px;
+        }
+
+        .hero h1 {
+            font-size: 58px;
+            max-width: 750px;
+            line-height: 1.1;
+            margin-bottom: 25px;
+        }
+
+        .hero p {
+            font-size: 20px;
+            max-width: 700px;
+            margin-bottom: 35px;
+        }
+
+        .hero-button {
+            width: fit-content;
+            background: white;
+            color: #075e54;
+            border: none;
+            padding: 15px 28px;
+            border-radius: 10px;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .hero-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        /* =========================
+           COMMON SECTIONS
+        ========================== */
+
+        section {
+            padding: 80px 8%;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 38px;
+            margin-bottom: 15px;
+        }
+
+        .section-description {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 40px;
+            color: #567065;
+        }
+
+        /* =========================
+           WASTE GUIDE
+        ========================== */
+
+        #waste-guide {
+            background: white;
+        }
+
+        .waste-buttons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 35px auto;
+        }
+
+        .waste-buttons button {
+            background: white;
+            color: #075e54;
+            border: 2px solid #20a464;
+            padding: 15px 22px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .waste-buttons button:hover {
+            background: #20a464;
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        #waste-result {
+            max-width: 850px;
+            min-height: 160px;
+            margin: 30px auto;
+            padding: 30px;
+            background: #e6f7ec;
+            border-left: 6px solid #20a464;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        #waste-result h3 {
+            font-size: 25px;
+            margin-bottom: 10px;
+            color: #075e54;
+        }
+
+        /* =========================
+           DAILY ACTIONS
+        ========================== */
+
+        #daily-actions {
+            background: #f4faf6;
+        }
+
+        .action-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            max-width: 1000px;
+            margin: 40px auto;
+        }
+
+        .action-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 18px rgba(0,0,0,0.08);
+            text-align: center;
+            transition: 0.3s;
+        }
+
+        .action-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .action-icon {
+            font-size: 35px;
+            margin-bottom: 10px;
+        }
+
+        .action-card h3 {
+            margin-bottom: 8px;
+        }
+
+        /* =========================
+           ECO SCORE
+        ========================== */
+
+        #eco-score {
+            background: white;
+            text-align: center;
+        }
+
+        .score-box {
+            max-width: 600px;
+            margin: 35px auto;
+            padding: 35px;
+            border-radius: 18px;
+            background: #e6f7ec;
+        }
+
+        .score-number {
+            font-size: 55px;
+            font-weight: bold;
+            color: #16804d;
+            margin: 15px;
+        }
+
+        .score-button {
+            background: #16804d;
+            color: white;
+            border: none;
+            padding: 13px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .score-button:hover {
+            background: #075e54;
+        }
+
+        /* =========================
+           ABOUT
+        ========================== */
+
+        #about {
+            background: #075e54;
+            color: white;
+            text-align: center;
+        }
+
+        #about p {
+            max-width: 800px;
+            margin: 20px auto;
+            font-size: 18px;
+        }
+
+        /* =========================
+           FOOTER
+        ========================== */
+
+        footer {
+            background: #043d36;
+            color: white;
+            text-align: center;
+            padding: 25px;
+        }
+
+        /* =========================
+           MOBILE
+        ========================== */
+
+        @media (max-width: 700px) {
+
+            header {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            nav a {
+                margin: 0 7px;
+                font-size: 14px;
+            }
+
+            .hero {
+                min-height: 550px;
+            }
+
+            .hero h1 {
+                font-size: 40px;
+            }
+
+            .hero p {
+                font-size: 17px;
+            }
+
+            .section-title {
+                font-size: 30px;
+            }
+        }
+    </style>
+</head>
+
+
+<body>
+
+    <!-- =========================
+         NAVIGATION
+    ========================== -->
+
+    <header>
+
+        <div class="logo">
+            🌱 Eco<span>Track</span>
+        </div>
+
+        <nav>
+            <a href="#home">Home</a>
+            <a href="#waste-guide">Waste Guide</a>
+            <a href="#daily-actions">Eco Tips</a>
+            <a href="#about">About</a>
+        </nav>
+
+    </header>
+
+
+    <!-- =========================
+         HERO
+    ========================== -->
+
+    <section class="hero" id="home">
+
+        <div class="earth">🌍</div>
+
+        <h1>
+            Make every choice count for Earth.
+        </h1>
+
+        <p>
+            Learn how to manage waste, recycle correctly,
+            and make simple eco-friendly choices every day.
+        </p>
+
+        <button class="hero-button" id="exploreButton">
+            Start Exploring ♻️
+        </button>
+
+    </section>
+
+
+    <!-- =========================
+         WASTE GUIDE
+    ========================== -->
+
+    <section id="waste-guide">
+
+        <h2 class="section-title">
+            ♻️ Waste Guide
+        </h2>
+
+        <p class="section-description">
+            Select a waste category to learn how it should
+            be handled and recycled.
+        </p>
+
+
+        <div class="waste-buttons">
+
+            <button data-category="plastic">
+                🧴 Plastic
+            </button>
+
+            <button data-category="paper">
+                📄 Paper
+            </button>
+
+            <button data-category="food">
+                🍎 Food Waste
+            </button>
+
+            <button data-category="ewaste">
+                📱 E-Waste
+            </button>
+
+        </div>
+
+
+        <div id="waste-result">
+
+            <h3>
+                Choose a category above
+            </h3>
+
+            <p>
+                EcoTrack will show useful disposal
+                and recycling guidance here.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         DAILY ACTIONS
+    ========================== -->
+
+    <section id="daily-actions">
+
+        <h2 class="section-title">
+            🌱 Simple Ways to Help the Planet
+        </h2>
+
+        <p class="section-description">
+            Small actions can become meaningful habits.
+            Try these simple actions in your everyday life.
+        </p>
+
+
+        <div class="action-container" id="action-list">
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         ECO SCORE
+    ========================== -->
+
+    <section id="eco-score">
+
+        <h2 class="section-title">
+            🌍 Your Eco Score
+        </h2>
+
+        <p class="section-description">
+            Complete simple eco-friendly actions and
+            track your progress.
+        </p>
+
+
+        <div class="score-box">
+
+            <p>Your current score</p>
+
+            <div class="score-number" id="score">
+                0
+            </div>
+
+            <button class="score-button" id="addScore">
+                Complete an Eco Action 🌱
+            </button>
+
+            <p id="scoreMessage" style="margin-top:15px;">
+                Start making a difference today!
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         ABOUT
+    ========================== -->
+
+    <section id="about">
+
+        <h2 class="section-title">
+            🌿 About EcoTrack
+        </h2>
+
+        <p>
+            EcoTrack is a simple educational web application
+            designed to help people understand waste management,
+            recycling, and everyday environmentally friendly choices.
+        </p>
+
+    </section>
+
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
+
+    <footer>
+
+        <p>
+            © 2026 EcoTrack | Earth Forward 🌍
+        </p>
+
+    </footer>
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================== -->
+
+    <script>
+
+        /* -------------------------
+           WASTE INFORMATION
+        -------------------------- */
+
+        const wasteInfo = {
+
+            plastic: {
+                title: "🧴 Plastic Waste",
+                text:
+                    "Clean plastic bottles and containers before recycling when possible. Keep them separate from food waste and follow your local recycling rules."
+            },
+
+            paper: {
+                title: "📄 Paper Waste",
+                text:
+                    "Keep newspapers, cardboard and other recyclable paper clean and dry. Separate heavily contaminated paper from recyclable materials."
+            },
+
+            food: {
+                title: "🍎 Food Waste",
+                text:
+                    "Food scraps and peels can often be composted where suitable facilities are available. Keep food waste separate from recyclable materials."
+            },
+
+            ewaste: {
+                title: "📱 E-Waste",
+                text:
+                    "Old phones, computers and electronic devices should be taken to an appropriate e-waste collection or recycling facility. Do not place electronics in normal household recycling unless your local program accepts them."
+            }
+
+        };
+
+
+        /* -------------------------
+           WASTE BUTTONS
+        -------------------------- */
+
+        const wasteButtons =
+            document.querySelectorAll(
+                ".waste-buttons button"
+            );
+
+        const wasteResult =
+            document.getElementById(
+                "waste-result"
+            );
+
+
+        wasteButtons.forEach(function(button) {
+
+            button.addEventListener(
+                "click",
+                function() {
+
+                    const category =
+                        button.dataset.category;
+
+                    const information =
+                        wasteInfo[category];
+
+
+                    if (information) {
+
+                        wasteResult.innerHTML = `
+
+                            <h3>
+                                ${information.title}
+                            </h3>
+
+                            <p>
+                                ${information.text}
+                            </p>
+
+                        `;
+
+                        wasteResult.scrollIntoView({
+                            behavior: "smooth",
+                            block: "center"
+                        });
+
+                    }
+
+                }
+            );
+
+        });
+
+
+        /* -------------------------
+           START EXPLORING
+        -------------------------- */
+
+        const exploreButton =
+            document.getElementById(
+                "exploreButton"
+            );
+
+
+        exploreButton.addEventListener(
+            "click",
+            function() {
+
+                document
+                    .getElementById("waste-guide")
+                    .scrollIntoView({
+                        behavior: "smooth"
+                    });
+
+            }
+        );
+
+
+        /* -------------------------
+           DAILY ECO ACTIONS
+        -------------------------- */
+
+        const actions = [
+
+            {
+                icon: "💧",
+                title: "Save Water",
+                text: "Turn off the tap when water is not needed."
+            },
+
+            {
+                icon: "🛍️",
+                title: "Reduce Plastic",
+                text: "Use reusable bags instead of unnecessary single-use bags."
+            },
+
+            {
+                icon: "💡",
+                title: "Save Energy",
+                text: "Switch off lights and electronics when they are not needed."
+            },
+
+            {
+                icon: "♻️",
+                title: "Recycle",
+                text: "Separate recyclable materials from general waste."
+            },
+
+            {
+                icon: "🌳",
+                title: "Protect Nature",
+                text: "Avoid littering and help keep public spaces clean."
+            },
+
+            {
+                icon: "🚶",
+                title: "Choose Greener Travel",
+                text: "Walk or cycle for short journeys when practical and safe."
+            }
+
+        ];
+
+
+        const actionList =
+            document.getElementById(
+                "action-list"
+            );
+
+
+        actions.forEach(function(action) {
+
+            const card =
+                document.createElement("div");
+
+            card.className =
+                "action-card";
+
+
+            card.innerHTML = `
+
+                <div class="action-icon">
+                    ${action.icon}
+                </div>
+
+                <h3>
+                    ${action.title}
+                </h3>
+
+                <p>
+                    ${action.text}
+                </p>
+
+            `;
+
+
+            actionList.appendChild(card);
+
+        });
+
+
+        /* -------------------------
+           ECO SCORE
+        -------------------------- */
+
+        let score = 0;
+
+
+        const scoreDisplay =
+            document.getElementById(
+                "score"
+            );
+
+        const scoreButton =
+            document.getElementById(
+                "addScore"
+            );
+
+        const scoreMessage =
+            document.getElementById(
+                "scoreMessage"
+            );
+
+
+        scoreButton.addEventListener(
+            "click",
+            function() {
+
+                score += 10;
+
+                scoreDisplay.textContent =
+                    score;
+
+
+                if (score < 50) {
+
+                    scoreMessage.textContent =
+                        "Great start! Keep going 🌱";
+
+                }
+                else if (score < 100) {
+
+                    scoreMessage.textContent =
+                        "You're building great eco-friendly habits! 🌿";
+
+                }
+                else {
+
+                    scoreMessage.textContent =
+                        "Amazing! You're making a strong positive impact! 🌍";
+
+                }
+
+            }
+        );
+
+    </script>
+
+</body>
+</html>
